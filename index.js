@@ -1,5 +1,6 @@
 const fs = require('node:fs');
 const path = require("path");
+const http = require("http");
 
 // fs.writeFileSync('file.txt', 'Hello, Node.js', err => {
 //     if (err) {
@@ -68,12 +69,31 @@ const path = require("path");
 // console.log(path.dirname(p)); // 'newer-folder'
 // console.log(path.extname(p)); 
 
-fs.copyFile('index.js', 'newer-folder/index.js', (err) => {
-  if (err) {
-    console.log(err);
+// fs.copyFile('index.js', 'newer-folder/index.js', (err) => {
+//   if (err) {
+//     console.log(err);
+//   }
+//   else {
+//     console.log('file copied successfully');
+//   }
+// });
+
+
+const server = http.createServer((req, res) => {
+  res.setHeader('Content-Type', 'text/html');
+  if (req.url === '/login') {
+    res.write('<html> <head> <title> js class </title> </head> <body> <h1> Hello, login </h1> </body> </html>')
   }
   else {
-    console.log('file copied successfully');
+    res.write('<html> <head> <title> js class </title> </head> <body> <h1> Hello, Node.js </h1> </body> </html>');
   }
-});
+  res.end();
+})
+
+const port = 3000;
+const host = 'localhost';
+
+server.listen(port, host, () => {
+  console.log(`Server is running on http://${host}:${port}`);
+})
 
