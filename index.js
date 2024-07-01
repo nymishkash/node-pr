@@ -82,12 +82,18 @@ const http = require("http");
 const server = http.createServer((req, res) => {
   res.setHeader('Content-Type', 'text/html');
   if (req.url === '/login') {
-    res.write('<html> <head> <title> js class </title> </head> <body> <h1> Hello, login </h1> </body> </html>')
+    fs.readFile(path.join(__dirname, 'index.html'), (err, data) => {
+      if (err) {
+        res.end('<h1>server error</h1>')
+        return;
+      }
+      res.end(data);
+    });
   }
   else {
     res.write('<html> <head> <title> js class </title> </head> <body> <h1> Hello, Node.js </h1> </body> </html>');
+    res.end();
   }
-  res.end();
 })
 
 const port = 3000;
